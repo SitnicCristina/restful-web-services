@@ -1,6 +1,6 @@
-package com.in28minutes.rest.webservices.restfulwebservices.User;
+package com.in28minutes.rest.webservices.restfulwebservices.user;
 
-import com.in28minutes.rest.webservices.restfulwebservices.Post;
+import com.in28minutes.rest.webservices.restfulwebservices.post.Post;
 import com.in28minutes.rest.webservices.restfulwebservices.jpa.PostRepository;
 import com.in28minutes.rest.webservices.restfulwebservices.jpa.UserRepository;
 import jakarta.validation.Valid;

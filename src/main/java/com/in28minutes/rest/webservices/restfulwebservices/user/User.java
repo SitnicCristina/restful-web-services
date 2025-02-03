@@ -1,38 +1,46 @@
-package com.in28minutes.rest.webservices.restfulwebservices.User;
+package com.in28minutes.rest.webservices.restfulwebservices.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.in28minutes.rest.webservices.restfulwebservices.Post;
+import com.in28minutes.rest.webservices.restfulwebservices.post.Post;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name= "user_details")
+@Entity(name = "user_details")
 public class User {
 
-    protected User(){}
+    protected User() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use database auto-increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Size(min = 2, message = "Name should have at least 2 characters")
     private String name;
 
-    @Past(message  = "Birthday should be in the past")
+    @Past(message = "Birthday should be in the past")
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
     public User(Integer id, String name, LocalDate birthDate) {
-        super();
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+        this.posts = new ArrayList<>();
+    }
+
+    public User(Integer id, String name, LocalDate birthDate, List<Post> posts) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.posts = posts;
     }
 
     public Integer getId() {
@@ -60,7 +68,11 @@ public class User {
     }
 
     public List<Post> getPosts() {
-        return posts;
+        return posts == null ? new ArrayList<>() : posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override

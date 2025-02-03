@@ -1,7 +1,7 @@
-package com.in28minutes.rest.webservices.restfulwebservices;
+package com.in28minutes.rest.webservices.restfulwebservices.post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.in28minutes.rest.webservices.restfulwebservices.User.User;
+import com.in28minutes.rest.webservices.restfulwebservices.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -9,15 +9,25 @@ import jakarta.validation.constraints.Size;
 public class Post {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Ensure consistency with User entity
     private Integer id;
 
-    @Size(min = 10)
+    @Size(min = 10, message = "Description should have at least 10 characters")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")  // Explicitly defining foreign key column
     @JsonIgnore
     private User user;
+
+    // Default constructor
+    public Post() {}
+
+    // Constructor with parameters
+    public Post(String description, User user) {
+        this.description = description;
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;

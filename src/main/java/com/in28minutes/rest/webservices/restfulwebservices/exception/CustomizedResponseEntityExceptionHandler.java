@@ -1,6 +1,6 @@
 package com.in28minutes.rest.webservices.restfulwebservices.exception;
 
-import com.in28minutes.rest.webservices.restfulwebservices.User.UserNotFoundException;
+import com.in28minutes.rest.webservices.restfulwebservices.user.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
