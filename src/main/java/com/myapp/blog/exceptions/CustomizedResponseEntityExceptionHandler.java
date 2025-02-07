@@ -1,6 +1,5 @@
-package com.in28minutes.rest.webservices.restfulwebservices.exception;
+package com.myapp.blog.exceptions;
 
-import com.in28minutes.rest.webservices.restfulwebservices.user.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
