@@ -1,6 +1,5 @@
-package com.in28minutes.rest.webservices.restfulwebservices.exception;
+package com.myapp.blog.exceptions;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ErrorDetails {

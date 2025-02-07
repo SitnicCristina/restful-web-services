@@ -1,7 +1,6 @@
-package com.in28minutes.rest.webservices.restfulwebservices.post;
+package com.myapp.blog.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.in28minutes.rest.webservices.restfulwebservices.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -20,13 +19,16 @@ public class Post {
     @JsonIgnore
     private User user;
 
-    // Default constructor
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Post() {}
 
-    // Constructor with parameters
-    public Post(String description, User user) {
+    public Post(String description, User user, Category category) {
         this.description = description;
         this.user = user;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -51,6 +53,14 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

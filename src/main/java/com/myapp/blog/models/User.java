@@ -1,7 +1,11 @@
-package com.in28minutes.rest.webservices.restfulwebservices.user;
+package com.myapp.blog.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.in28minutes.rest.webservices.restfulwebservices.post.Post;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -22,6 +26,9 @@ public class User {
     @Size(min = 2, message = "Name should have at least 2 characters")
     private String name;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Past(message = "Birthday should be in the past")
     private LocalDate birthDate;
 
