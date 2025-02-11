@@ -1,20 +1,20 @@
 package com.myapp.blog.steps;
 
+import com.myapp.blog.config.CucumberSpringConfiguration;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.Base64;
-
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class GetAllUsersSteps {
+public class GetAllUsersSteps extends CucumberSpringConfiguration {
 
     private Response response;
     ResponseEntity<String> lastResponse;
@@ -27,22 +27,29 @@ public class GetAllUsersSteps {
         String username = "user";
         String password = "userPass";
 
+        RestTemplate restTemplate = new RestTemplateBuilder()
+                .basicAuthentication(username, password)  // ✅ Use RestTemplateBuilder for authentication
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBasicAuth(username, password);  // ✅ Correctly encode Basic Auth
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
         // ✅ Print Headers Before Request
         System.out.println("Sending GET request to: http://localhost:" + port + endpoint);
-        System.out.println("Authorization: Basic " +
-                Base64.getEncoder().encodeToString((username + ":" + password).getBytes()));
+        System.out.println("Headers: " + headers.toString());
 
-        // ✅ 1. Send Request Using RestAssured with Basic Auth
-        response = given()
-                .baseUri("http://localhost:" + port)
-                .auth().preemptive().basic(username, password)  // ✅ Add Basic Authentication
-                .header("Accept", "*/*")
-                .log().all()  // ✅ Log request details
-                .when()
-                .get(endpoint)
-                .then()
-                .log().all()  // ✅ Log response details
-                .extract().response();
+        lastResponse = restTemplate.exchange(
+                "http://localhost:" + port + endpoint,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+
+        // ✅ Print Response Headers
+        System.out.println("Response Headers: " + lastResponse.getHeaders().toString());
     }
 
     @Then("the response status should be {int}")
