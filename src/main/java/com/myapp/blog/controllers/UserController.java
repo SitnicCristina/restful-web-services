@@ -59,33 +59,6 @@ public class UserController {
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId())
                 .toUri();
-//        return ResponseEntity.created(location).body(savedUser);
         return ResponseEntity.ok("POST request successful");
-    }
-
-    @GetMapping("/{id}/posts")
-    public ResponseEntity<List<Post>> retrievePostsForUser(@PathVariable int id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
-        return ResponseEntity.ok(user.get().getPosts());
-    }
-
-    @PostMapping("/{id}/posts")
-    public ResponseEntity<Post> createPostForUser(@PathVariable int id, @Valid @RequestBody Post post) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotFoundException("User not found with id: " + id);
-        }
-
-        post.setUser(user.get());
-        Post savedPost = postRepository.save(post);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedPost.getId())
-                .toUri();
-        return ResponseEntity.created(location).body(savedPost);
     }
 }
