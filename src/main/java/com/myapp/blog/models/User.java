@@ -17,8 +17,6 @@ import java.util.List;
 @Entity(name = "user_details")
 public class User {
 
-    protected User() {}
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,6 +33,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Post> posts = new ArrayList<>();
+
+    protected User() {}
 
     public User(Integer id, String name, LocalDate birthDate) {
         this.id = id;
