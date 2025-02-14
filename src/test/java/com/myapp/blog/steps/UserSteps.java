@@ -82,7 +82,7 @@ public class UserSteps extends CucumberSpringConfiguration {
     }
 
     @When("I send a GET request to {string} with ID {int}")
-    public void i_send_a_get_request_to(String endpoint, int userId) {
+    public void i_send_a_get_request_to(String endpoint, int id) {
        RestTemplate restTemplate = new RestTemplateBuilder()
                 .basicAuthentication(username, password)
                 .build();
@@ -93,7 +93,9 @@ public class UserSteps extends CucumberSpringConfiguration {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        String fullEndpoint = "http://localhost:" + port + endpoint.replace("{id}", String.valueOf(userId));
+        String fullEndpoint = "http://localhost:" + port + endpoint
+                .replace("{id}", String.valueOf(id))
+                .replace("{userId}", String.valueOf(id));
 
         // Log Request Details
         System.out.println("Sending GET request to: " + fullEndpoint);
@@ -178,56 +180,6 @@ public class UserSteps extends CucumberSpringConfiguration {
         // Log Response Details
         System.out.println("Response Status: " + lastResponse.getStatusCode());
         System.out.println("Response Headers: " + lastResponse.getHeaders());
-    }
-
-    @When("I send a POST request to {string} with ID {int} and post details from {string}")
-    public void i_send_a_post_request_to_with_id_and_post_details_from(String endpoint, int userId, String jsonFilePath) throws IOException {
-        // Load blog post details from JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(jsonFilePath);
-        if (inputStream == null) {
-            throw new RuntimeException("Test data file not found: " + jsonFilePath);
-        }
-
-        // Load list of posts but send them individually
-        postFromJson = objectMapper.readValue(inputStream, new TypeReference<List<Post>>() {});
-
-        // Set up RestTemplate with authentication
-        RestTemplate restTemplate = new RestTemplateBuilder()
-                .basicAuthentication(username, password)
-                .build();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth(username, password);
-
-        // Construct full endpoint with userId
-        String fullEndpoint = "http://localhost:" + port + endpoint.replace("{userId}", String.valueOf(userId));
-
-        for (Post post : postFromJson) {
-            HttpEntity<Post> entity = new HttpEntity<>(post, headers);
-
-            // Log Request Details
-            System.out.println("Sending POST request to: " + fullEndpoint);
-            System.out.println("Headers: " + headers);
-            System.out.println("Request Body: " + post);
-
-            lastResponse = restTemplate.exchange(
-                    fullEndpoint,
-                    HttpMethod.POST,
-                    entity,
-                    String.class
-            );
-
-            testContext.setLastResponse(lastResponse);
-
-            // Log Response Details
-            System.out.println("Response Status: " + lastResponse.getStatusCode());
-            System.out.println("Response Headers: " + lastResponse.getHeaders());
-            System.out.println("Response Body: " + lastResponse.getBody());
-        }
     }
 
     //   DataBase checks

@@ -32,8 +32,13 @@ public class PostController {
     }
 
     @GetMapping("/jpa/users/{userId}/posts")
-    public List<Post> getPostsByUser(@PathVariable Integer userId) {
-        return postRepository.findByUser_Id(userId);
+    public ResponseEntity<List<Post>> getPostsByUser(@PathVariable Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<Post> posts = postRepository.findByUser_Id(userId);
+        return ResponseEntity.ok(posts);
     }
 
     @PostMapping("/jpa/users/{userId}/posts")
