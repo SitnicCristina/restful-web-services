@@ -19,9 +19,8 @@ public class Comment {
     @JsonIgnore
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     public Comment() {}

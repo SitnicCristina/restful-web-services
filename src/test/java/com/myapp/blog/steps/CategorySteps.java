@@ -24,12 +24,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The {@code UserSteps} class defines Cucumber step definitions for testing
- * the User API endpoints. It provides automated test steps for performing
- * CRUD operations (GET, POST, DELETE) on category.
- *
- **/
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CategorySteps extends CucumberSpringConfiguration {
 

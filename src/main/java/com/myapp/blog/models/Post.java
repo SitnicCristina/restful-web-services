@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Size;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Ensure consistency with User entity
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Size(min = 10, message = "Description should have at least 10 characters")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")  // Explicitly defining foreign key column
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 

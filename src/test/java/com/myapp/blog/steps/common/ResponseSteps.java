@@ -6,12 +6,13 @@ import com.myapp.blog.config.CucumberSpringConfiguration;
 import com.myapp.blog.models.Category;
 import com.myapp.blog.models.Post;
 import com.myapp.blog.models.User;
+import com.myapp.blog.models.Comment;
+import com.myapp.blog.utils.JsonUtils;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ResponseSteps extends CucumberSpringConfiguration {
@@ -28,7 +29,8 @@ public class ResponseSteps extends CucumberSpringConfiguration {
         ResponseEntity<String> lastResponse = testContext.getLastResponse();
         System.out.println("Response Status: " + lastResponse.getStatusCode());
         System.out.println("Response Headers: " + lastResponse.getHeaders());
-        System.out.println("Response Body: " + lastResponse.getBody());
+
+        JsonUtils.printPrettyJson(lastResponse);
 
         Assert.assertEquals(expectedStatus, lastResponse.getStatusCode().value());
     }
@@ -73,6 +75,16 @@ public class ResponseSteps extends CucumberSpringConfiguration {
 
         Assert.assertNotNull("Response body should not be null", actualPost);
         Assert.assertEquals("User ID should match", Integer.valueOf(postId), actualPost.getId());
+    }
+
+    @Then("the response should contain the comment details for ID {int}")
+    public void the_response_should_contain_the_comment_details_for_id(int commentId) throws Exception {
+        ResponseEntity<String> lastResponse = testContext.getLastResponse();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Comment actualComment = objectMapper.readValue(lastResponse.getBody(), Comment.class);
+
+        Assert.assertNotNull("Response body should not be null", actualComment);
+        Assert.assertEquals("User ID should match", Integer.valueOf(commentId), actualComment.getId());
     }
 
 }
