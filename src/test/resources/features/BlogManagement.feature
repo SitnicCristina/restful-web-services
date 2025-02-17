@@ -94,7 +94,45 @@ Feature: Blog Post Management
 #POST	/jpa/posts/{postId}/comments	Create a comment for a post
 #DELETE	/jpa/comments/{id}	            Delete comment by ID
 
+  Scenario: Comment - Successfully get all comments
+    When I send a GET request to "/jpa/comments"
+    Then the response status should be 200
+    And the response should contain details
+
+  Scenario: Comment - Successfully get comment by ID
+    Given a comment with ID 1 exists in the database
+    When I send a GET request to "/jpa/comments/{id}" with ID 1
+    Then the response status should be 200
+    And the response should contain the comment details for ID 1
+
+  Scenario: Comment - Successfully create a new comment for a specific post
+    Given a post with ID 1 exists in the database
+    When I send a POST request to "/jpa/posts/{postId}/comments" with ID 1 and comment details from "testdata/comments.json"
+    Then the response status should be 200
+
+  Scenario: Comment - Successfully delete a comment by ID
+    Given a comment with ID 1 exists in the database
+    When I send a DELETE request to "/jpa/comments/{id}" with ID 1
+    Then the response status should be 204
+    And the comment with ID 1 should not be present in the database
+
 #----------------------- LIKES -----------------------------
 #GET	/jpa/likes	                    Get all likes
 #POST	/jpa/posts/{postId}/likes	    Like a post
 #DELETE	/jpa/likes/{id}	                Remove a like by ID
+
+  Scenario: Like - Successfully get all likes
+    When I send a GET request to "/jpa/likes"
+    Then the response status should be 200
+    And the response should contain details
+
+  Scenario: Like - Successfully create a new like for a specific post
+    Given a post with ID 1 exists in the database
+    When I send a POST request to "/jpa/posts/{postId}/likes" with ID 1 and like details from "testdata/likes.json"
+    Then the response status should be 200
+
+  Scenario: Like - Successfully delete a like by ID
+    Given a like with ID 2 exists in the database
+    When I send a DELETE request to "/jpa/likes/{id}" with ID 2
+    Then the response status should be 204
+    And the like with ID 2 should not be present in the database

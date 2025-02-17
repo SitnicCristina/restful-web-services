@@ -5,11 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.myapp.blog.config.CucumberSpringConfiguration;
-import com.myapp.blog.models.Category;
-import com.myapp.blog.models.Post;
 import com.myapp.blog.models.User;
 import com.myapp.blog.repositories.UserRepository;
 import com.myapp.blog.steps.common.TestContext;
+import com.myapp.blog.utils.JsonUtils;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,17 +22,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-
-/**
- * The {@code UserSteps} class defines Cucumber step definitions for testing
- * the User API endpoints. It provides automated test steps for performing
- * CRUD operations (GET, POST, DELETE) on users.
- *
-**/
  @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class UserSteps extends CucumberSpringConfiguration {
 
@@ -45,7 +36,6 @@ public class UserSteps extends CucumberSpringConfiguration {
 
     private ResponseEntity<String> lastResponse;
     private List<User> usersFromJson;
-    private List<Post> postFromJson;
 
     @Value("${server.port}")
     private int port;
@@ -180,6 +170,8 @@ public class UserSteps extends CucumberSpringConfiguration {
         // Log Response Details
         System.out.println("Response Status: " + lastResponse.getStatusCode());
         System.out.println("Response Headers: " + lastResponse.getHeaders());
+
+        JsonUtils.printPrettyJson(lastResponse);
     }
 
     //   DataBase checks
