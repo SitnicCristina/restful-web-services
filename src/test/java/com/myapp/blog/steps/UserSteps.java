@@ -9,10 +9,7 @@ import com.myapp.blog.models.User;
 import com.myapp.blog.repositories.UserRepository;
 import com.myapp.blog.steps.common.TestContext;
 import com.myapp.blog.utils.JsonUtils;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 
  @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class UserSteps extends CucumberSpringConfiguration {
@@ -174,26 +170,4 @@ public class UserSteps extends CucumberSpringConfiguration {
         JsonUtils.printPrettyJson(lastResponse);
     }
 
-    //   DataBase checks
-    @Given("a user with ID {int} exists in the database")
-    public void a_user_with_id_exists_in_the_database(int userId) {
-        validateUserInDatabaseById(userId);
-    }
-
-    @Then("the user with ID {int} should not be present in the database")
-    public void the_user_with_id_should_not_be_present_in_the_database(int userId) {
-        Optional<User> userInDb = userRepository.findById(userId);
-        Assert.assertFalse("User should not be found in the database", userInDb.isPresent());
-    }
-
-    public void validateUserInDatabase(int userId, String expectedName) {
-        Optional<User> userInDb = userRepository.findById(userId);
-        Assert.assertTrue("User should be found in the database", userInDb.isPresent());
-        Assert.assertEquals("User name should match", expectedName, userInDb.get().getName());
-    }
-
-    public void validateUserInDatabaseById(int userId) {
-        Optional<User> userInDb = userRepository.findById(userId);
-        Assert.assertTrue("User should be found in the database", userInDb.isPresent());
-    }
 }

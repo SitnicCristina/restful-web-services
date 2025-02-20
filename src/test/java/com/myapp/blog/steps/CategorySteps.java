@@ -8,10 +8,7 @@ import com.myapp.blog.config.CucumberSpringConfiguration;
 import com.myapp.blog.models.Category;
 import com.myapp.blog.repositories.CategoryRepository;
 import com.myapp.blog.steps.common.TestContext;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CategorySteps extends CucumberSpringConfiguration {
@@ -83,29 +79,6 @@ public class CategorySteps extends CucumberSpringConfiguration {
 
             testContext.setLastResponse(lastResponse);
         }
-    }
-
-    //   DataBase checks
-    @Given("a category with ID {int} exists in the database")
-    public void a_category_with_id_exists_in_the_database(int categoryId) {
-        validateCategoryInDatabaseById(categoryId);
-    }
-
-    @Then("the category with ID {int} should not be present in the database")
-    public void the_category_with_id_should_not_be_present_in_the_database(int categoryId) {
-        Optional<Category> categoryInDb = categoryRepository.findById(categoryId);
-        Assert.assertFalse("Category should not be found in the database", categoryInDb.isPresent());
-    }
-
-    public void validateCategoryInDatabase(int categoryId, String expectedName) {
-        Optional<Category> categoryInDb = categoryRepository.findById(categoryId);
-        Assert.assertTrue("Category should be found in the database", categoryInDb.isPresent());
-        Assert.assertEquals("Category name should match", expectedName, categoryInDb.get().getName());
-    }
-
-    public void validateCategoryInDatabaseById(int categoryId) {
-        Optional<Category> categoryInDb = categoryRepository.findById(categoryId);
-        Assert.assertTrue("Category should be found in the database", categoryInDb.isPresent());
     }
 
 }

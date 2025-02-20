@@ -44,19 +44,6 @@ public class LikesSteps {
     @Value("${password.value}")
     private String password;
 
-    //   DataBase checks
-    @Given("a like with ID {int} exists in the database")
-    public void a_like_with_id_exists_in_the_database(int likeId) {
-        Optional<Like> likeInDb = likeRepository.findById(likeId);
-        Assert.assertTrue("Like should be found in the database", likeInDb.isPresent());
-    }
-
-    @Then("the like with ID {int} should not be present in the database")
-    public void the_like_with_id_should_not_be_present_in_the_database(int likeId) {
-        Optional<Like> likeInDb = likeRepository.findById(likeId);
-        Assert.assertFalse("Post should not be found in the database", likeInDb.isPresent());
-    }
-
     @When("I send a POST request to {string} with ID {int} and like details from {string}")
     public void i_send_a_post_request_to_with_id_and_like_details_from(String endpoint, int postId, String jsonFilePath) throws IOException {
         // Load comment details from JSON

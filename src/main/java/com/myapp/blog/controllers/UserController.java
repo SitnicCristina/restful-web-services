@@ -54,11 +54,16 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
+        if (user.getId() != null) {
+            return ResponseEntity.badRequest().body("ID should not be provided for new users");
+        }
+
         User savedUser = userRepository.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId())
                 .toUri();
-        return ResponseEntity.ok("POST request successful");
+
+        return ResponseEntity.created(location).body("User created successfully");
     }
 }
