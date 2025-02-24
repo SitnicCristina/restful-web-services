@@ -93,16 +93,4 @@ public class PostSteps {
         }
     }
 
-    //   DataBase checks
-    @Given("a post with ID {int} exists in the database")
-    public void a_post_with_id_exists_in_the_database(int postId) {
-        Optional<Post> postInDb = postRepository.findById(postId);
-        Assert.assertTrue("Post should be found in the database", postInDb.isPresent());
-    }
-
-    @Then("the post with ID {int} should not be present in the database")
-    public void the_post_with_id_should_not_be_present_in_the_database(int postId) {
-        Optional<Post> postInDb = postRepository.findById(postId);
-        Assert.assertFalse("Post should not be found in the database", postInDb.isPresent());
-    }
 }

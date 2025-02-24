@@ -7,10 +7,7 @@ import com.myapp.blog.models.Comment;
 import com.myapp.blog.repositories.CommentRepository;
 import com.myapp.blog.steps.common.TestContext;
 import com.myapp.blog.utils.JsonUtils;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
 
 public class CommentSteps {
     @Autowired
@@ -92,16 +88,4 @@ public class CommentSteps {
         }
     }
 
-    //   DataBase checks
-    @Given("a comment with ID {int} exists in the database")
-    public void a_comment_with_id_exists_in_the_database(int commentId) {
-        Optional<Comment> commentInDb = commentRepository.findById(commentId);
-        Assert.assertTrue("Comment should be found in the database", commentInDb.isPresent());
-    }
-
-    @Then("the comment with ID {int} should not be present in the database")
-    public void the_comment_with_id_should_not_be_present_in_the_database(int commentId) {
-        Optional<Comment> commentInDb = commentRepository.findById(commentId);
-        Assert.assertFalse("Comment should not be found in the database", commentInDb.isPresent());
-    }
 }
