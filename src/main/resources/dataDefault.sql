@@ -1,3 +1,5 @@
+-- Data for Hibernate to insert on each run after the tables are created
+-- To enable the insert data, please rename the file to data.sql and update the field to true spring.jpa.hibernate.ddl-auto=true
 -- Insert Users
 INSERT INTO user_details (name, birth_date) VALUES ('Alice Johnson', '1990-05-15');
 INSERT INTO user_details (name, birth_date) VALUES ('Bob Smith', '1985-10-20');
