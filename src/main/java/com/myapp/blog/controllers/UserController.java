@@ -15,9 +15,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*") // Allows frontend to fetch posts
 @RestController
 @RequestMapping("/jpa/users")
-@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserRepository userRepository;

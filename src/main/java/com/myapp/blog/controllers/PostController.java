@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*") // Allows frontend to fetch posts
 @RestController
 public class PostController {
 
@@ -47,6 +48,11 @@ public class PostController {
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
+        if (post.getTitle() == null || post.getTitle().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         post.setUser(user.get());
         Post savedPost = postRepository.save(post);
         return ResponseEntity.ok(savedPost);

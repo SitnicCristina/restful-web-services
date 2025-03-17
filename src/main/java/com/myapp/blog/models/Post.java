@@ -11,8 +11,11 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(min = 10, message = "Description should have at least 10 characters")
-    private String description;
+    @Size(min = 5, message = "Title should have at least 5 characters")
+    private String title;
+
+    @Size(min = 10, message = "Content should have at least 10 characters")
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -25,8 +28,9 @@ public class Post {
 
     public Post() {}
 
-    public Post(String description, User user, Category category) {
-        this.description = description;
+    public Post(String title, String content, User user, Category category) {
+        this.title = title;
+        this.content = content;
         this.user = user;
         this.category = category;
     }
@@ -39,12 +43,20 @@ public class Post {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public User getUser() {
@@ -67,7 +79,9 @@ public class Post {
     public String toString() {
         return "Post{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }
