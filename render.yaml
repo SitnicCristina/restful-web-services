@@ -6,7 +6,7 @@ services:
     plan: free
     region: oregon
     branch: main
-    buildCommand: "./mvnw clean package && ./mvnw liquibase:update"  # ✅ Run Liquibase migrations
+    buildCommand: "./mvnw clean package && ./mvnw liquibase:update"
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: render
