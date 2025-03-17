@@ -1,7 +1,7 @@
 services:
   - name: restful-web-services
     type: web
-    runtime: native
+    runtime: node
     repo: https://github.com/SitnicCristina/restful-web-services
     plan: free
     region: oregon
