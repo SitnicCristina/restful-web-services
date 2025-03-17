@@ -7,7 +7,6 @@ services:
     region: oregon  # Change region if needed
     branch: main
     buildCommand: "./mvnw clean package && ./mvnw liquibase:update"
-    startCommand: "java -jar target/restful-web-services-0.0.1-SNAPSHOT.jar"
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: render
