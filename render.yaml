@@ -1,15 +1,17 @@
+# Exported from Render on 2025-03-17T14:40:04Z
 services:
-  - name: restful-web-services
-    type: web
+  - type: web
+    name: restful-web-services
     runtime: docker
     repo: https://github.com/SitnicCristina/restful-web-services
     plan: free
-    region: oregon  # Change region if needed
-    branch: main
-    buildCommand: "./mvnw clean package && ./mvnw liquibase:update"
     envVars:
-      - key: SPRING_PROFILES_ACTIVE
-        value: render
       - key: H2_CONSOLE_ENABLED
-        value: "true"
-    healthCheckPath: "/actuator/health"
+        sync: false
+      - key: SPRING_PROFILES_ACTIVE
+        sync: false
+    region: oregon
+    healthCheckPath: /actuator/health
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+version: "1"
