@@ -15,11 +15,11 @@ INSERT INTO category (name) VALUES ('Solo Travel');
 INSERT INTO category (name) VALUES ('Family Travel');
 
 -- Insert Posts
-INSERT INTO post (description, category_id, user_id) VALUES ('Top 10 Adventure Destinations for 2025', 1, 2);
-INSERT INTO post (description, category_id, user_id) VALUES ('Best Luxury Hotels Around the World', 2, 3);
-INSERT INTO post (description, category_id, user_id) VALUES ('How to Travel on a Budget', 3, 1);
-INSERT INTO post (description, category_id, user_id) VALUES ('Tips for Solo Travelers', 4, 5);
-INSERT INTO post (description, category_id, user_id) VALUES ('Best Family-Friendly Destinations', 5, 4);
+INSERT INTO post (title, content, category_id, user_id) VALUES ('Adventure Destinations', 'Top 10 Adventure Destinations for 2025', 1, 2);
+INSERT INTO post (title, content, category_id, user_id) VALUES ('Luxury Hotels', 'Best Luxury Hotels Around the World', 2, 3);
+INSERT INTO post (title, content, category_id, user_id) VALUES ('Budget Travel Guide', 'How to Travel on a Budget', 3, 1);
+INSERT INTO post (title, content, category_id, user_id) VALUES ('Solo Travel Tips', 'Tips for Solo Travelers', 4, 5);
+INSERT INTO post (title, content, category_id, user_id) VALUES ('Family Destinations', 'Best Family-Friendly Destinations', 5, 4);
 
 -- Insert Comments
 INSERT INTO comment (content, post_id, user_id) VALUES ('I have been to some of these adventure spots, they are amazing!', 1, 3);

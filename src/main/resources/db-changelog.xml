@@ -4,13 +4,13 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-<!--    <changeSet id="000-drop-tables" author="generated">-->
-<!--        <dropTable tableName="likes" ifExists="true"/>-->
-<!--        <dropTable tableName="comment" ifExists="true"/>-->
-<!--        <dropTable tableName="post" ifExists="true"/>-->
-<!--        <dropTable tableName="category" ifExists="true"/>-->
-<!--        <dropTable tableName="user_details" ifExists="true"/>-->
-<!--    </changeSet>-->
+    <changeSet id="000-drop-tables" author="generated">
+        <dropTable tableName="likes" ifExists="true"/>
+        <dropTable tableName="comment" ifExists="true"/>
+        <dropTable tableName="post" ifExists="true"/>
+        <dropTable tableName="category" ifExists="true"/>
+        <dropTable tableName="user_details" ifExists="true"/>
+    </changeSet>
 
     <changeSet id="Create user_details table" author="generated">
         <createTable tableName="user_details">
@@ -42,7 +42,10 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_POST"/>
             </column>
-            <column name="description" type="text">
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="category_id" type="int">
@@ -128,27 +131,32 @@
 
     <changeSet id="003-insert-posts" author="generated" runAlways="true">
         <insert tableName="post">
-            <column name="description" value="Top 10 Adventure Destinations for 2025"/>
+            <column name="title" value="Adventure Destinations"/>
+            <column name="content" value="Top 10 Adventure Destinations for 2025"/>
             <column name="category_id" value="1"/>
             <column name="user_id" value="2"/>
         </insert>
         <insert tableName="post">
-            <column name="description" value="Best Luxury Hotels Around the World"/>
+            <column name="title" value="Luxury Hotels"/>
+            <column name="content" value="Best Luxury Hotels Around the World"/>
             <column name="category_id" value="2"/>
             <column name="user_id" value="3"/>
         </insert>
         <insert tableName="post">
-            <column name="description" value="How to Travel on a Budget"/>
+            <column name="title" value="Budget Travel Guide"/>
+            <column name="content" value="How to Travel on a Budget"/>
             <column name="category_id" value="3"/>
             <column name="user_id" value="1"/>
         </insert>
         <insert tableName="post">
-            <column name="description" value="Tips for Solo Travelers"/>
+            <column name="title" value="Solo Travel Tips"/>
+            <column name="content" value="Tips for Solo Travelers"/>
             <column name="category_id" value="4"/>
             <column name="user_id" value="5"/>
         </insert>
         <insert tableName="post">
-            <column name="description" value="Best Family-Friendly Destinations"/>
+            <column name="title" value="Family Destinations"/>
+            <column name="content" value="Best Family-Friendly Destinations"/>
             <column name="category_id" value="5"/>
             <column name="user_id" value="4"/>
         </insert>
