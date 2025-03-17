@@ -1,16 +1,24 @@
 services:
   - name: restful-web-services
     type: web
-    runtime: node
-    repo: https://github.com/SitnicCristina/restful-web-services
+    runtime: docker  # Use Docker for Java support
+    repo: https://github.com/SitnicCristina/restful-web-services  # Replace with your actual GitHub repo
     plan: free
     region: oregon
     branch: main
-    buildCommand: "./mvnw clean package && ./mvnw liquibase:update"
-    startCommand: "java -jar target/restful-web-services-0.0.1-SNAPSHOT.jar"
+    healthCheckPath: "/actuator/health"  # Health check endpoint
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: render
       - key: H2_CONSOLE_ENABLED
         value: "true"
-    healthCheckPath: "/actuator/health"
+      - key: SPRING_DATASOURCE_URL
+        value: "jdbc:h2:file:./data/demo"
+      - key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+        value: "org.h2.Driver"
+      - key: SPRING_DATASOURCE_USERNAME
+        value: "sa"
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: ""
+    buildCommand: "./mvnw clean package && ./mvnw liquibase:update"  # Build and run Liquibase migrations
+    startCommand: "java -jar target/restful-web-services-0.0.1-SNAPSHOT.jar"  # Start the Spring Boot app
