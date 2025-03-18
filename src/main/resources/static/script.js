@@ -4,8 +4,8 @@ let categoriesList = []; // Store categories globally
 // Fetch and display all posts
 async function fetchPosts() {
     try {
-        console.log("Fetching posts from:", `${BASE_URL}/posts`);
-        let response = await fetch(`${BASE_URL}/posts`, {
+        console.log("Fetching posts from:", `${BASE_URL}/jpa/posts`);
+        let response = await fetch(`${BASE_URL}/jpa/posts`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -40,8 +40,8 @@ async function fetchPosts() {
 // Fetch categories and populate dropdown
 async function fetchCategories() {
     try {
-        console.log("Fetching categories from:", `${BASE_URL}/categories`);
-        let response = await fetch(`${BASE_URL}/categories`, {
+        console.log("Fetching categories from:", `${BASE_URL}/jpa/categories`);
+        let response = await fetch(`${BASE_URL}/jpa/categories`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -110,7 +110,7 @@ async function addPost() {
     try {
         console.log("Adding post:", postData);
 
-        let response = await fetch(`${BASE_URL}/users/1/posts`, {
+        let response = await fetch(`${BASE_URL}/jpa/users/1/posts`, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -156,7 +156,7 @@ function addPostToUI(post) {
 // Delete a post
 async function deletePost(postId, button) {
     try {
-        let response = await fetch(`${BASE_URL}/posts/${postId}`, {
+        let response = await fetch(`${BASE_URL}/jpa/posts/${postId}`, {
             method: "DELETE",
             headers: {
                 "Accept": "application/json",
