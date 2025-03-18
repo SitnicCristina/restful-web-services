@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost/jpa";
+const BASE_URL = "https://restful-web-services-q39d.onrender.com";
 let categoriesList = []; // Store categories globally
 
 // Fetch and display all posts
