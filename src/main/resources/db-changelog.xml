@@ -4,13 +4,13 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="000-drop-tables" author="generated">
-        <dropTable tableName="likes" ifExists="true"/>
-        <dropTable tableName="comment" ifExists="true"/>
-        <dropTable tableName="post" ifExists="true"/>
-        <dropTable tableName="category" ifExists="true"/>
-        <dropTable tableName="user_details" ifExists="true"/>
-    </changeSet>
+<!--    <changeSet id="000-drop-tables" author="generated">-->
+<!--        <dropTable tableName="likes" ifExists="true"/>-->
+<!--        <dropTable tableName="comment" ifExists="true"/>-->
+<!--        <dropTable tableName="post" ifExists="true"/>-->
+<!--        <dropTable tableName="category" ifExists="true"/>-->
+<!--        <dropTable tableName="user_details" ifExists="true"/>-->
+<!--    </changeSet>-->
 
     <changeSet id="Create user_details table" author="generated">
         <createTable tableName="user_details">
