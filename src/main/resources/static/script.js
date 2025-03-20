@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost/jpa";
+const BASE_URL = "https://webserviceh2hibernate.onrender.com";
 let categoriesList = []; // Store categories globally
 
 // Fetch and display all posts
