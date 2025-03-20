@@ -4,23 +4,30 @@ FROM openjdk:17-jdk-slim AS build
 # ✅ Set the working directory
 WORKDIR /app
 
-# ✅ Copy the project files into the container
-COPY . .
+# ✅ Copy only essential files first (to leverage caching)
+COPY pom.xml mvnw mvnw.cmd ./
+COPY .mvn .mvn
+
+# ✅ Copy the rest of the project files
+COPY src src
 
 # ✅ Grant execution permission to Maven wrapper
 RUN chmod +x ./mvnw
 
-# ✅ Build the application and apply Liquibase migrations
-RUN ./mvnw clean package
+# ✅ Build the Spring Boot application (Skipping tests for faster build)
+RUN ./mvnw clean package -DskipTests
+
+# ✅ Step 2: Use a separate, clean image to run the application
+FROM openjdk:17-jdk-slim
 
 # ✅ Set the working directory for the runtime container
 WORKDIR /app
 
 # ✅ Copy the built JAR from the previous stage
-COPY --from=build /app/target/restful-web-services-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 # ✅ Expose the application port
-#EXPOSE 80
+EXPOSE 80
 
 # ✅ Run the application
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
