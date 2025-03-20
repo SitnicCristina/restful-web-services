@@ -1,0 +1,22 @@
+services:
+  - name: restful-web-services
+    type: web
+    runtime: node
+    repo: https://github.com/restful-web-services  # Replace with your actual GitHub repository
+    plan: free
+    region: oregon
+    branch: WebServiceH2Hibernate
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: H2_CONSOLE_ENABLED
+        value: "true"
+      - key: SPRING_DATASOURCE_URL
+        value: "jdbc:h2:file:./data/demo"
+      - key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+        value: "org.h2.Driver"
+      - key: SPRING_DATASOURCE_USERNAME
+        value: "sa"
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: ""
+    healthCheckPath: "/actuator/health"
