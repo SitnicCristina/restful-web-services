@@ -23,6 +23,10 @@ Modular Test Architecture: Supports high-level structuring for implementing vari
 AI-Driven Enhancements: Allows integration with AI-based testing tools to improve efficiency and coverage.
 Extensibility: Designed to be expandable for future testing methodologies, including UI testing, performance testing, and security testing.
 
+_**3. Deployment and Integration for UI Testing (UI and AI)**_
+The APIs were successfully deployed on Render, enabling live access to the backend endpoints. These endpoints were then integrated into the UI of the Blog Management Application, forming the foundation for conducting end-to-end UI tests.
+The user interface was tested using testRigor, an AI-driven test automation tool. The platform enabled the creation and execution of intelligent UI test cases, validating the frontend interactions against the deployed APIs to ensure seamless user experience and data flow.
+
 **Future Expansion**
 After completing API testing, the project will evolve to incorporate:
 UI and Acceptance Testing: Expanding the Test Automation Framework to cover frontend testing.
